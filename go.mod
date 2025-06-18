@@ -2,8 +2,6 @@ module build
 
 go 1.24.3
 
-toolchain go1.24.2
-
 require (
 	github.com/BurntSushi/toml v1.5.0
 	github.com/a-h/templ v0.3.898
