@@ -1,16 +1,16 @@
-package main
+package publishers
 
 import (
+	"build/entities"
 	"encoding/json"
 	"log"
 	"math/rand"
 	"time"
-	"weatherdredger/internal/config/structs"
 
 	"github.com/nats-io/nats.go"
 )
 
-func main() {
+func temperature() {
 	nc, err := nats.Connect(nats.DefaultURL)
 	if err != nil {
 		log.Fatal(err)
@@ -18,7 +18,7 @@ func main() {
 	defer nc.Drain()
 
 	for {
-		reading := structs.TemperatureReading{
+		reading := entities.TemperatureReading{
 			StationID:    "temperature-station-1",
 			Timestamp:    time.Now().UTC().Format(time.RFC3339),
 			TemperatureC: 15 + rand.Float64()*10,

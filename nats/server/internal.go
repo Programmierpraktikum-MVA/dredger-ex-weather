@@ -4,8 +4,6 @@ import (
 	"log"
 	"net/http"
 
-	"weatherdredger/internal/server/subscribers"
-
 	"github.com/gorilla/websocket"
 	"github.com/nats-io/nats.go"
 )
@@ -42,8 +40,8 @@ func handleWebSocket(w http.ResponseWriter, r *http.Request) {
 	defer nc.Drain()
 
 	// Subscribe to relevant channels
-	humSub := subscribers.SubscribeHumidity(nc, ws)
-	tempSub := subscribers.SubscribeTemperature(nc, ws)
+	humSub := SubscribeHumidity(nc, ws)
+	tempSub := SubscribeTemperature(nc, ws)
 	if humSub == nil || tempSub == nil {
 		log.Println("Subscription failed")
 		return

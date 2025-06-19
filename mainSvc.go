@@ -4,4 +4,6 @@ package main
 func mainSvc() {
 	// Add your own evaluation of the flags for additional commands
 	// Add your own service running concurrent with the echo web service
+	publishers.humidity()
+	publishers.temperature()
 }

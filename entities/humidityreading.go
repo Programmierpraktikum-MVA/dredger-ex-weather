@@ -1,4 +1,4 @@
-package structs
+package entities
 
 // HumidityReading matches the “weatherHumidity” payload in AsyncAPI
 type HumidityReading struct {

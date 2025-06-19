@@ -8,12 +8,14 @@ import (
 	"build/core/log"
 	"build/core/tracing"
 	"build/db"
+	"build/nats/server"
 	"build/rest"
 	"build/rest/middleware"
 	"build/web"
 	"context"
 	"embed"
 	_ "embed"
+	"net/http"
 
 	"github.com/labstack/echo-contrib/echoprometheus"
 	"github.com/labstack/echo/v4"
@@ -57,6 +59,15 @@ func main() {
 
 	e.GET("/metrics", echoprometheus.NewHandler()) // adds route to serve gathered metrics
 	rest.NewHandler(e)
+
+	//start nats server
+	server.RegisterHandlers()
+
+	addr := ":8080"
+	log.Printf("Listening on http://localhost%s", addr)
+	if err := http.ListenAndServe(addr, nil); err != nil {
+		log.Fatalf("Server error: %v", err)
+	}
 
 	// serve doc
 	if core.AppConfig.ElementsDoc {

@@ -1,4 +1,4 @@
-package structs
+package entities
 
 import "encoding/json"
 

@@ -1,16 +1,16 @@
-package main
+package publishers
 
 import (
+	"build/entities"
 	"encoding/json"
 	"log"
 	"math/rand"
 	"time"
-	"weatherdredger/internal/config/structs"
 
 	"github.com/nats-io/nats.go"
 )
 
-func main() {
+func humidity() {
 	nc, err := nats.Connect(nats.DefaultURL)
 	if err != nil {
 		log.Fatal(err)
@@ -18,7 +18,7 @@ func main() {
 	defer nc.Drain()
 
 	for {
-		reading := structs.HumidityReading{
+		reading := entities.HumidityReading{
 			StationID:       "humidity-station-1",
 			Timestamp:       time.Now().UTC().Format(time.RFC3339),
 			HumidityPercent: 40 + rand.Float64()*20,
