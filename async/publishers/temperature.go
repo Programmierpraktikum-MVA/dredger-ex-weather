@@ -10,13 +10,13 @@ import (
 	"github.com/nats-io/nats.go"
 )
 
-func temperature() {
+func Temperature() {
 	nc, err := nats.Connect(nats.DefaultURL)
 	if err != nil {
 		log.Fatal(err)
 	}
 	defer nc.Drain()
-
+	time.Sleep(time.Second)
 	for {
 		reading := entities.TemperatureReading{
 			StationID:    "temperature-station-1",
