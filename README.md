@@ -18,5 +18,6 @@ _Zweck: Integration von sowohl OpenAPI als auch AsyncAPI_
 1. Docker installieren
 2. `docker run -d -p 4222:4222 nats`
 3. `go run .` im Projektordner
+4. GUI unter `http://localhost:8080`
 
 **NEU:** Die Sensoren werden automatisch gestartet
