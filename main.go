@@ -15,6 +15,7 @@ import (
 	"context"
 	"embed"
 	_ "embed"
+	"flag"
 
 	"github.com/labstack/echo-contrib/echoprometheus"
 	"github.com/labstack/echo/v4"
@@ -26,6 +27,7 @@ import (
 var embeddedFS embed.FS
 
 func main() {
+	flag.Parse()
 	log.Setup(core.AppConfig.Name, core.Service, core.AppConfig.LogFile, core.AppConfig.LokiServer, core.AppConfig.LokiKey, core.AppConfig.LokiLabels, core.AppConfig.LokiBuffersize, core.AppConfig.LokiMaxDelay, core.AppConfig.Debug)
 
 	// init Opentelemetry
@@ -76,7 +78,7 @@ func main() {
 	e.StaticFS("/css/", echo.MustSubFS(web.Css, "css"))
 	e.StaticFS("/js/", echo.MustSubFS(web.Js, "js"))
 	e.StaticFS("/images/", echo.MustSubFS(web.Images, "images"))
-	e.StaticFS("/", echo.MustSubFS(web.Public, "public"))
+	e.StaticFS("/public/", echo.MustSubFS(web.Public, "public"))
 
 	if core.AppConfig.CertPem != "" && core.AppConfig.KeyPem != "" {
 		e.Logger.Fatal(e.StartTLS(":"+core.AppConfig.PortNb, []byte(core.AppConfig.CertPem), []byte(core.AppConfig.KeyPem)))
