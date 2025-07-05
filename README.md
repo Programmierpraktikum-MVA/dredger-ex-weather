@@ -30,7 +30,7 @@ _Zweck: Integration von sowohl OpenAPI als auch AsyncAPI_
 - `publishers/weather-humidity.go`
 
 ```go
-func Humidity() {
+func publishHumidityReading() {
 	nc, err := nats.Connect(nats.DefaultURL)
 	if err != nil {
 		log.Fatal(err)
@@ -65,7 +65,7 @@ func Humidity() {
 - `publishers/weather-temperature.go`
 
 ```go
-func Temperature() {
+func publishTemperatureReading(){
 	nc, err := nats.Connect(nats.DefaultURL)
 	if err != nil {
 		log.Fatal(err)
