@@ -2,9 +2,8 @@
 package rest
 
 import (
-	"build/core/log"
-	"build/core/tracing"
-	"build/usecases"
+	"asyncService/core/log"
+	"asyncService/core/tracing"
 
 	"net/http"
 
@@ -29,9 +28,7 @@ func ListStations(c echo.Context) error {
 	// }
 
 	// implement your functionality best using a function from a separate file, e.g. usecases/ListStationsDo.go
-	stations := usecases.ListStations()
-	return c.JSON(http.StatusOK, stations)
 
 	// 200 => A list of weather stations
-	//return c.String(http.StatusNotImplemented, "Temporary handler stub.")
+	return c.String(http.StatusNotImplemented, "Temporary handler stub.")
 }

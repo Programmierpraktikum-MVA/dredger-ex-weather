@@ -6,7 +6,7 @@ import (
 	"strings"
 )
 
-const Service = "build"
+const Service = "async-service"
 
 type Info struct {
 	Service string

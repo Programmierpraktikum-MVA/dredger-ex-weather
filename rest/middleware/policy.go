@@ -15,8 +15,8 @@ import (
 	"github.com/open-policy-agent/opa/ast"
 	"github.com/open-policy-agent/opa/rego"
 
-	"build/core"
-	"build/core/log"
+	"asyncService/core"
+	"asyncService/core/log"
 )
 
 var (
@@ -140,7 +140,7 @@ type OpaResult struct {
 
 func checkPolicyLocal(req *http.Request, rule string, input Input) bool {
 	query := rego.New(
-		rego.Query("data.build.authz."+rule),
+		rego.Query("data.asyncService.authz."+rule),
 		rego.Compiler(policyCompiler),
 		rego.Input(input),
 	)
@@ -167,7 +167,7 @@ func checkPolicyOpaSvc(req *http.Request, rule string, input Input) bool {
 		return false
 	}
 	buf := bytes.NewReader(jsonData)
-	resp, err := http.Post("http://"+core.AppConfig.OpaSvc+"/v1/data/build/authz/"+rule, "application/json", buf)
+	resp, err := http.Post("http://"+core.AppConfig.OpaSvc+"/v1/data/asyncService/authz/"+rule, "application/json", buf)
 	if err != nil {
 		log.Error().Err(err).Str("rule", rule).Msg("Calling policy check failed")
 		return false

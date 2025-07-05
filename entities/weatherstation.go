@@ -6,13 +6,19 @@ import (
 )
 
 type WeatherStation struct {
+	Type        string        `json:"type,omitempty" yaml:"type,omitempty" xml:"type,omitempty"`
 	Id          string        `json:"id,omitempty" yaml:"id,omitempty" xml:"id,omitempty"`
 	LastReading WeatherUpdate `json:"lastReading,omitempty" yaml:"lastReading,omitempty" xml:"lastReading,omitempty"`
 	Name        string        `json:"name,omitempty" yaml:"name,omitempty" xml:"name,omitempty"`
-	Type        string        `json:"type,omitempty" yaml:"type,omitempty" xml:"type,omitempty"`
 }
 
 func (v *WeatherStation) Validate() error {
+
+	// ToDo: Improve validation of MaxLength
+
+	if len(v.Type) > 9223372036854775807 {
+		return fmt.Errorf("string '%s' is too long", "type")
+	}
 
 	// ToDo: Improve validation of MaxLength
 
@@ -24,12 +30,6 @@ func (v *WeatherStation) Validate() error {
 
 	if len(v.Name) > 9223372036854775807 {
 		return fmt.Errorf("string '%s' is too long", "name")
-	}
-
-	// ToDo: Improve validation of MaxLength
-
-	if len(v.Type) > 9223372036854775807 {
-		return fmt.Errorf("string '%s' is too long", "type")
 	}
 
 	return nil

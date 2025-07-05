@@ -4,7 +4,7 @@ package db
 import (
 	"database/sql"
 
-	"build/core/log"
+	"asyncService/core/log"
 
 	_ "github.com/mattn/go-sqlite3"
 )

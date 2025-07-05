@@ -2,7 +2,7 @@
 package middleware
 
 import (
-	"build/core/log"
+	"asyncService/core/log"
 
 	"github.com/labstack/echo/v4"
 )

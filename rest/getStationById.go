@@ -2,9 +2,8 @@
 package rest
 
 import (
-	"build/core/log"
-	"build/core/tracing"
-	"build/usecases"
+	"asyncService/core/log"
+	"asyncService/core/tracing"
 
 	"net/http"
 
@@ -32,14 +31,7 @@ func GetStationById(c echo.Context) error {
 
 	// implement your functionality best using a function from a separate file, e.g. usecases/GetStationByIdDo.go
 
-	//stationId := c.Param("stationId")
-	station, err := usecases.GetStationByID(stationId)
-	if err != nil {
-		return c.String(http.StatusNotFound, err.Error())
-	}
-	return c.JSON(http.StatusOK, station)
-
-	// 404 => Station not found
 	// 200 => Details of a weather station
-	//return c.String(http.StatusNotImplemented, "Temporary handler stub.")
+	// 404 => Station not found
+	return c.String(http.StatusNotImplemented, "Temporary handler stub.")
 }

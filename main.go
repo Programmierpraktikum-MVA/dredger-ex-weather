@@ -4,15 +4,13 @@
 package main
 
 import (
-	"build/async/server"
-	"build/core"
-	"build/core/log"
-	"build/core/tracing"
-	"build/db"
-
-	"build/rest"
-	"build/rest/middleware"
-	"build/web"
+	"asyncService/core"
+	"asyncService/core/log"
+	"asyncService/core/tracing"
+	"asyncService/db"
+	"asyncService/rest"
+	"asyncService/rest/middleware"
+	"asyncService/web"
 	"context"
 	"embed"
 	_ "embed"
@@ -59,9 +57,6 @@ func main() {
 
 	e.GET("/metrics", echoprometheus.NewHandler()) // adds route to serve gathered metrics
 	rest.NewHandler(e)
-
-	//start nats server
-	server.RegisterHandlers(e)
 
 	// serve doc
 	if core.AppConfig.ElementsDoc {

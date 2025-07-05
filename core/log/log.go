@@ -8,8 +8,8 @@ import (
 	rotatelogs "github.com/lestrrat-go/file-rotatelogs"
 	"github.com/rs/zerolog"
 
-	"build/core/log/logger"
-	"build/core/log/loki"
+	"asyncService/core/log/logger"
+	"asyncService/core/log/loki"
 )
 
 var log logger.ZeroLog

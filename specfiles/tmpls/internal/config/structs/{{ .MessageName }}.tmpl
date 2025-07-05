@@ -1,8 +1,0 @@
-package structs
-
-// {{ .MessageName }} matches the “{{ .ChannelName }}” payload in AsyncAPI
-type {{ .MessageName }} struct {
-{{- range .Fields }}
-	{{ .GoName }} {{ .GoType }} `json:"{{ .JSONName }}"` // {{ .Description }}
-{{- end }}
-}
