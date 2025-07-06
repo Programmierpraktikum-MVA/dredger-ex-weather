@@ -1,8 +1,8 @@
 package tracing
 
 import (
-	"build/core"
-	"build/core/log"
+	"asyncservice/core"
+	"asyncservice/core/log"
 
 	"go.opentelemetry.io/otel"
 	stdout "go.opentelemetry.io/otel/exporters/stdout/stdouttrace"

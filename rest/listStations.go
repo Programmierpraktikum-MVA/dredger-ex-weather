@@ -2,9 +2,9 @@
 package rest
 
 import (
-	"build/core/log"
-	"build/core/tracing"
-	"build/usecases"
+	"asyncservice/core/log"
+	"asyncservice/core/tracing"
+	"asyncservice/usecases"
 
 	"net/http"
 
@@ -28,10 +28,10 @@ func ListStations(c echo.Context) error {
 	// 	return c.NoContent(http.StatusInternalServerError)
 	// }
 
-	// implement your functionality best using a function from a separate file, e.g. usecases/ListStationsDo.go
 	stations := usecases.ListStations()
 	return c.JSON(http.StatusOK, stations)
+	// implement your functionality best using a function from a separate file, e.g. usecases/ListStationsDo.go
 
 	// 200 => A list of weather stations
-	//return c.String(http.StatusNotImplemented, "Temporary handler stub.")
+	return c.String(http.StatusNotImplemented, "Temporary handler stub.")
 }

@@ -36,18 +36,31 @@ func RegisterHandlers(e *echo.Echo) {
 		defer nc.Drain()
 
 		// Subscribe to NATS topics
-		humSub := SubscribeHumidity(nc, ws)
-		tempSub := SubscribeTemperature(nc, ws)
-		if humSub == nil || tempSub == nil {
-			log.Println("Subscription failed")
+		var subscriptions []*nats.Subscription
+
+		
+		subscribetohumidityreadingssub := Subscribetohumidityreadings(nc, ws)
+		if subscribetohumidityreadingssub == nil {
+			log.Println("Subscription to weather-humidity failed")
 			return nil
 		}
+		subscriptions = append(subscriptions, subscribetohumidityreadingssub)
+		
+		subscribetotemperaturereadingssub := Subscribetotemperaturereadings(nc, ws)
+		if subscribetotemperaturereadingssub == nil {
+			log.Println("Subscription to weather-temperature failed")
+			return nil
+		}
+		subscriptions = append(subscriptions, subscribetotemperaturereadingssub)
+		
 
-		// Keep WebSocket open until closed by client
+		// Keep WebSocket open until client closes
 		for {
 			if _, _, err := ws.ReadMessage(); err != nil {
-				humSub.Unsubscribe()
-				tempSub.Unsubscribe()
+				// Unsubscribe all on WebSocket close
+				for _, sub := range subscriptions {
+					sub.Unsubscribe()
+				}
 				break
 			}
 		}

@@ -8,8 +8,9 @@ import (
 	rotatelogs "github.com/lestrrat-go/file-rotatelogs"
 	"github.com/rs/zerolog"
 
-	"build/core/log/logger"
-	"build/core/log/loki"
+	//"asyncservice/core"
+	"asyncservice/core/log/loki"
+	"asyncservice/core/log/logger"
 )
 
 var log logger.ZeroLog
@@ -37,21 +38,21 @@ func Setup(name string, service string, logFilename string, lokiServer string, l
 		Str("name", name).
 		Logger()
 	if logFilename != "" || lokiServer != "" {
-		if debug {
-			log.AddLoggerDebug(&console)
-		} else if logFilename == "-" {
-			log.AddLoggerInfo(&console)
+	    if debug {
+	       log.AddLoggerDebug(&console)
+	    } else if logFilename == "-" {
+	       log.AddLoggerInfo(&console)
 		} else {
-			log.AddLoggerWarn(&console)
-		}
+		   log.AddLoggerWarn(&console)
+	    }
 	} else {
-		log.AddLoggerInfo(&console)
+	   log.AddLoggerInfo(&console)
 	}
 
 	// Add rotating file logger optionally
 	//
-	if logFilename != "-" && logFilename != "" {
-		println("Add file logger")
+    if logFilename != "-" && logFilename != "" {
+	   println("Add file logger")
 		logFile, err := rotatelogs.New(
 			logFilename+".%Y%m%d%H%M",
 			rotatelogs.WithLinkName(logFilename),

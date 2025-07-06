@@ -15,8 +15,8 @@ import (
 	"github.com/open-policy-agent/opa/ast"
 	"github.com/open-policy-agent/opa/rego"
 
-	"build/core"
-	"build/core/log"
+	"asyncservice/core"
+	"asyncservice/core/log"
 )
 
 var (
@@ -61,7 +61,7 @@ const (
 type Input map[string]interface{}
 
 func checkAuthorization(authorizationHeader string) (string, bool) {
-	log.Debug().Msg("Check authorization")
+    log.Debug().Msg("Check authorization")
 
 	// If no user and no staff is configured, the role user is authorized by default
 	if core.AppConfig.ParticipantUser == "" && core.AppConfig.StaffUser == "" {
@@ -71,8 +71,8 @@ func checkAuthorization(authorizationHeader string) (string, bool) {
 
 	parts := strings.Split(authorizationHeader, " ")
 	if len(parts) < 2 {
-		log.Debug().Msg("No authorizationHeader")
-		return "", false
+	   log.Debug().Msg("No authorizationHeader")
+	   return "", false
 	}
 	if strings.ToLower(parts[0]) == "bearer" {
 		if len(core.AppConfig.ApiKeys) > 0 {
@@ -110,7 +110,7 @@ func checkAuthorization(authorizationHeader string) (string, bool) {
 	}
 	user := tokenParts[0]
 	password := tokenParts[1]
-	log.Debug().Str("user", user).Str("password", password).Msg("Basic authentication found")
+	log.Debug().Str("user",user).Str("password",password).Msg("Basic authentication found")
 	// Check staff user
 	if core.AppConfig.StaffUser != "" && user == core.AppConfig.StaffUser {
 		if password == core.AppConfig.StaffPassword {
@@ -140,7 +140,7 @@ type OpaResult struct {
 
 func checkPolicyLocal(req *http.Request, rule string, input Input) bool {
 	query := rego.New(
-		rego.Query("data.build.authz."+rule),
+		rego.Query("data.asyncservice.authz."+rule),
 		rego.Compiler(policyCompiler),
 		rego.Input(input),
 	)
@@ -167,7 +167,7 @@ func checkPolicyOpaSvc(req *http.Request, rule string, input Input) bool {
 		return false
 	}
 	buf := bytes.NewReader(jsonData)
-	resp, err := http.Post("http://"+core.AppConfig.OpaSvc+"/v1/data/build/authz/"+rule, "application/json", buf)
+	resp, err := http.Post("http://"+core.AppConfig.OpaSvc+"/v1/data/asyncservice/authz/"+rule, "application/json", buf)
 	if err != nil {
 		log.Error().Err(err).Str("rule", rule).Msg("Calling policy check failed")
 		return false
@@ -207,13 +207,13 @@ func checkPolicy(c echo.Context) Action {
 
 func checkAccess(req *http.Request, role string, authorized bool) Action {
 	input := Input{
-		"url":     req.URL.String(),
-		"method":  req.Method,
-		"path":    req.URL.Path,
-		"trace":   req.Header.Get("Tracing"),
-		"session": req.Header.Get("Session-Id"),
-		"host":    core.AppConfig.Host,
-		"role":    role,
+		"url":      req.URL.String(),
+		"method":   req.Method,
+		"path":     req.URL.Path,
+		"trace":    req.Header.Get("Tracing"),
+		"session":  req.Header.Get("Session-Id"),
+		"host":     core.AppConfig.Host,
+		"role":     role,
 	}
 
 	var ok bool
@@ -238,12 +238,12 @@ func checkAccess(req *http.Request, role string, authorized bool) Action {
 
 func checkEntryPoint(req *http.Request) Action {
 	input := Input{
-		"url":     req.URL.String(),
-		"method":  req.Method,
-		"path":    req.URL.Path,
-		"trace":   req.Header.Get("Tracing"),
-		"session": req.Header.Get("Session-Id"),
-		"host":    core.AppConfig.Host,
+		"url":      req.URL.String(),
+		"method":   req.Method,
+		"path":     req.URL.Path,
+		"trace":    req.Header.Get("Tracing"),
+		"session":  req.Header.Get("Session-Id"),
+		"host":     core.AppConfig.Host,
 	}
 
 	var ok bool

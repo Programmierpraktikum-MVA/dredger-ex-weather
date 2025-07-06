@@ -2,9 +2,9 @@
 package rest
 
 import (
-	// "build/rest/middleware"
-	"build/core"
-	"build/core/log"
+	// "asyncservice/rest/middleware"
+	"asyncservice/core"
+	"asyncservice/core/log"
 
 	"github.com/google/uuid"
 	"github.com/gorilla/sessions"
@@ -57,14 +57,14 @@ func NewHandler(e *echo.Echo) {
 	//     }
 
 	// Operations for: "/stations"
-	g.POST("/stations", CreateStation)
-	// Operations for: "/stations"
 	g.GET("/stations", ListStations)
+	// Operations for: "/stations"
+	g.POST("/stations", CreateStation)
 
 	// Operations for: "/stations/:stationId"
-	g.PUT("/stations/:stationId", UpdateStationReading)
-	// Operations for: "/stations/:stationId"
 	g.GET("/stations/:stationId", GetStationById)
+	// Operations for: "/stations/:stationId"
+	g.PUT("/stations/:stationId", UpdateStationReading)
 
 	// Call handler extensions
 	newHandlerExt(e)

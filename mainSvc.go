@@ -2,12 +2,13 @@
 package main
 
 import (
-	"build/async/publishers"
+	"asyncservice/async/publishers"
 )
 
 func mainSvc() {
 	// Add your own evaluation of the flags for additional commands
 	// Add your own service running concurrent with the echo web service
-	go publishers.Humidity()
-	go publishers.Temperature()
+
+	go publishers.PublishHumidityReading()
+	go publishers.PublishTemperatureReading()
 }
