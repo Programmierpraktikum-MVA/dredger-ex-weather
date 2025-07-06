@@ -20,7 +20,7 @@ type Config struct {
 	Sid                 string   `ignored:"true"`
 	Name                string   `default:"build"`
 	Title               string
-	PortNb              string   `default:"9090"` // Port is a reserved name in k8s
+	PortNb              string   `default:"8080"` // Port is a reserved name in k8s
 	ApiKeys             []string `default:"" split_words:"true"`
 	SessionKey          string   `default:"" split_words:"true"`
 	Host                string   `ignored:"true"`

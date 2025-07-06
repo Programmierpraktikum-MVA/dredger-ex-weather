@@ -106,63 +106,40 @@
       transition: background 0.3s, color 0.3s;
       flex-shrink: 0;
     }
-    body.dark .channel-card {
-      background: #333;
-      box-shadow: 0 1px 6px rgba(255 255 255 / 0.1);
-    }
-    .channel-card time {
-      display: block;
-      font-size: 0.9rem;
-      color: #666;
-      margin-bottom: 0.5rem;
-      transition: color 0.3s;
-    }
-    body.dark .channel-card time {
-      color: #aaa;
-    }
-    .station {
-      font-weight: 600;
-      margin-bottom: 0.5rem;
-    }
-    .temp {
-      color: #e67300;
-      font-weight: 700;
-    }
-    .humidity {
-      color: #0077cc;
-      font-weight: 700;
-    }
   </style>
 </head>
 <body>
   <div class="header-row">
     <div class="header-left">
       <h1>Live Wetter Feed</h1>
-      <small>v1.0.0</small>
+      <small>1.0.0</small>
     </div>
-  <div class="header-right">
-    <a href="admin.html" class="btn btn-outline-primary btn-sm">Manage Stations</a>
-    <button id="toggleThemeBtn" class="btn btn-outline-secondary btn-sm">
-      Switch to Dark Mode
-    </button>
-    <span id="connectionStatus">Disconnected</span>
-  </div>
+    <div class="header-right">
+      <button id="toggleThemeBtn" class="btn btn-outline-secondary btn-sm">
+        Switch to Dark Mode
+      </button>
+      <span id="connectionStatus">Verbinden...</span>
+    </div>
   </div>
 
   <div class="channel-columns">
-    <div class="channel-column" id="temperature">
-      <h2>Temperatur</h2>
-      <!-- cards will be inserted here -->
+    
+    <div class="channel-column" id="weather-humidity">
+      <h2>weather-humidity</h2>
     </div>
-    <div class="channel-column" id="humidity">
-      <h2>Luftfeuchtigkeit</h2>
-      <!-- cards will be inserted here -->
+    
+    <div class="channel-column" id="weather-temperature">
+      <h2>weather-temperature</h2>
     </div>
+    
   </div>
 
   <script>
-    const temperatureCol = document.getElementById("temperature");
-    const humidityCol = document.getElementById("humidity");
+    
+      const weatherhumidity = document.getElementById("weather-humidity");
+    
+      const weathertemperature = document.getElementById("weather-temperature");
+    
     const toggleBtn = document.getElementById("toggleThemeBtn");
     const connectionStatus = document.getElementById("connectionStatus");
 
@@ -175,6 +152,7 @@
         toggleBtn.textContent = "Switch to Dark Mode";
       }
     };
+
     const wsProtocol = window.location.protocol === "https:" ? "wss" : "ws";
     const ws = new WebSocket(`${wsProtocol}://${window.location.host}/ws`);
 
@@ -199,45 +177,24 @@
       const type = envelope.type;
       const data = envelope.data;
 
-      const timestamp = formatTimestamp(data.timestamp);
-
       const card = document.createElement("div");
       card.className = "channel-card";
 
-      const stationDiv = document.createElement("div");
-      stationDiv.className = "station";
-      stationDiv.textContent = `Station: ${data.station_id}`;
-
-      const timeEl = document.createElement("time");
-      timeEl.setAttribute("datetime", data.timestamp);
-      timeEl.textContent = timestamp;
-
-      card.appendChild(stationDiv);
-      card.appendChild(timeEl);
-
+      // Pretty-print the data object as JSON inside a <pre> block for readability
+      card.innerHTML = `<pre style="white-space: pre-wrap; word-break: break-word;">${JSON.stringify(data, null, 2)}</pre>`;
+      if (type === "humidity") {
+        const firstCard = weatherhumidity.querySelector(".channel-card");
+        weatherhumidity.insertBefore(card, firstCard);
+      } else
       if (type === "temperature") {
-        const tempDiv = document.createElement("div");
-        tempDiv.innerHTML = `Temperatur: <span class="temp">${data.temperature_c.toFixed(1)} °C</span>`;
-        card.appendChild(tempDiv);
-        // Insert above other cards, but below the header
-        const firstCard = temperatureCol.querySelector(".channel-card");
-        //if (firstCard) {
-          temperatureCol.insertBefore(card, firstCard);
-        //} else {
-        //  temperatureCol.appendChild(card);
-        //}
-      } else if (type === "humidity") {
-        const humDiv = document.createElement("div");
-        humDiv.innerHTML = `Luftfeuchtigkeit: <span class="humidity">${data.humidity_percent.toFixed(1)} %</span>`;
-        card.appendChild(humDiv);
-        const firstCard = humidityCol.querySelector(".channel-card");
-        //if (firstCard) {
-          humidityCol.insertBefore(card, firstCard);
-        //} else {
-        //  humidityCol.appendChild(card);
-        //}
+        const firstCard = weathertemperature.querySelector(".channel-card");
+        weathertemperature.insertBefore(card, firstCard);
+      } else
+      {
+        console.warn("Unknown channel type:", type);
       }
     };
+
 
     ws.onerror = (err) => {
       connectionStatus.textContent = "Verbindungsfehler";
