@@ -35,7 +35,7 @@ COPY --from=builder /etc/nsswitch.conf /etc/nsswitch.conf
 COPY --from=builder /go/bin/app /go/bin/app
 # Use an unprivileged user
 USER appuser:appuser
-EXPOSE 9090
+EXPOSE 8080
 # Run the app binary
 CMD ["/go/bin/app"]
 # CMD ["/go/bin/app","-d"]
