@@ -2,9 +2,9 @@
 package entities
 
 type WeatherTemperature struct {
+  StationId interface{} `json:"station_id,omitempty" yaml:"station_id,omitempty" xml:"station_id,omitempty"`
   TemperatureC interface{} `json:"temperature_c,omitempty" yaml:"temperature_c,omitempty" xml:"temperature_c,omitempty"`
   Timestamp interface{} `json:"timestamp,omitempty" yaml:"timestamp,omitempty" xml:"timestamp,omitempty"`
-  StationId interface{} `json:"station_id,omitempty" yaml:"station_id,omitempty" xml:"station_id,omitempty"`
   }
 
 

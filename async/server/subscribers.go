@@ -8,8 +8,7 @@ import (
 	"github.com/gorilla/websocket"
 	"github.com/nats-io/nats.go"
 )
-
-func subscribeToHumidityReadings(nc *nats.Conn, ws *websocket.Conn) *nats.Subscription {
+func Subscribetohumidityreadings(nc *nats.Conn, ws *websocket.Conn) *nats.Subscription {
 
 	// Subscribe to "weather-humidity"
 	Sub, err := nc.Subscribe("weather-humidity", func(msg *nats.Msg) {
@@ -34,7 +33,7 @@ func subscribeToHumidityReadings(nc *nats.Conn, ws *websocket.Conn) *nats.Subscr
 	return Sub
 }
 
-func subscribeToTemperatureReadings(nc *nats.Conn, ws *websocket.Conn) *nats.Subscription {
+func Subscribetotemperaturereadings(nc *nats.Conn, ws *websocket.Conn) *nats.Subscription {
 
 	// Subscribe to "weather-temperature"
 	Sub, err := nc.Subscribe("weather-temperature", func(msg *nats.Msg) {

@@ -30,13 +30,13 @@ func GetStationById(c echo.Context) error {
 
 	stationId := c.Param("stationId")
 
+	// implement your functionality best using a function from a separate file, e.g. usecases/GetStationByIdDo.go
+
 	station, err := usecases.GetStationByID(stationId)
 	if err != nil {
 		return c.String(http.StatusNotFound, err.Error())
 	}
 	return c.JSON(http.StatusOK, station)
-
-	// implement your functionality best using a function from a separate file, e.g. usecases/GetStationByIdDo.go
 
 	// 404 => Station not found
 	// 200 => Details of a weather station

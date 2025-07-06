@@ -75,13 +75,12 @@ func UpdateStationReading(c echo.Context) error {
 
 	stationId := c.Param("stationId")
 
+	// implement your functionality best using a function from a separate file, e.g. usecases/UpdateStationReadingDo.go
 	err = usecases.UpdateStationReading(stationId, content)
 	if err != nil {
 		return c.String(http.StatusNotFound, err.Error())
 	}
 	return c.NoContent(http.StatusOK)
-
-	// implement your functionality best using a function from a separate file, e.g. usecases/UpdateStationReadingDo.go
 
 	// 200 => Weather station updated
 	// 404 => Station not found

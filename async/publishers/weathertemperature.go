@@ -30,7 +30,7 @@ func PublishTemperatureReading() {
 			continue
 		}
 
-		err = nc.Publish("WeatherTemperature", data)
+		err = nc.Publish("weather-temperature", data)
 		if err != nil {
 			log.Println("Error publishing temperature:", err)
 		} else {

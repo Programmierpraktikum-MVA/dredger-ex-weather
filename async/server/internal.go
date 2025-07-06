@@ -39,14 +39,14 @@ func RegisterHandlers(e *echo.Echo) {
 		var subscriptions []*nats.Subscription
 
 		
-		subscribetohumidityreadingssub := subscribeToHumidityReadings(nc, ws)
+		subscribetohumidityreadingssub := Subscribetohumidityreadings(nc, ws)
 		if subscribetohumidityreadingssub == nil {
 			log.Println("Subscription to weather-humidity failed")
 			return nil
 		}
 		subscriptions = append(subscriptions, subscribetohumidityreadingssub)
 		
-		subscribetotemperaturereadingssub := subscribeToTemperatureReadings(nc, ws)
+		subscribetotemperaturereadingssub := Subscribetotemperaturereadings(nc, ws)
 		if subscribetotemperaturereadingssub == nil {
 			log.Println("Subscription to weather-temperature failed")
 			return nil

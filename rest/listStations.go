@@ -22,15 +22,14 @@ func ListStations(c echo.Context) error {
 	spanId := span.SpanContext().SpanID().String()
 	log.Info().Str("traceId", traceId).Str("spanId", spanId).Str("path", "/").Msg("ListStations")
 
-	stations := usecases.ListStations()
-	return c.JSON(http.StatusOK, stations)
-
 	// session, err := getSession(c)
 	// if err != nil {
 	// 	log.Error().Err(err).Msg("ListStations failed")
 	// 	return c.NoContent(http.StatusInternalServerError)
 	// }
 
+	stations := usecases.ListStations()
+	return c.JSON(http.StatusOK, stations)
 	// implement your functionality best using a function from a separate file, e.g. usecases/ListStationsDo.go
 
 	// 200 => A list of weather stations

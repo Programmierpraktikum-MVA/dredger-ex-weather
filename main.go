@@ -75,7 +75,7 @@ func main() {
 		e.FileFS("/doc", "web/doc/rapidoc.html", embeddedFS)
 	}
 
-	e.FileFS("/examples/weather-example/weather-api.yaml.yaml", "web/doc/examples/weather-example/weather-api.yaml.yaml", embeddedFS)
+	e.FileFS("/examples/weather-example/weather-api.yaml", "web/doc/examples/weather-example/weather-api.yaml", embeddedFS)
 
 	// serve default stylesheets and javascript files
 	e.StaticFS("/css/", echo.MustSubFS(web.Css, "css"))
