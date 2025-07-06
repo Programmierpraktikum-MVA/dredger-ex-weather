@@ -1,16 +1,16 @@
 package publishers
 
 import (
-	"build/entities"
+	"asyncservice/entities"
 	"encoding/json"
-	"log"
+	"log" //noch an core logger anpassen
 	"math/rand"
 	"time"
 
 	"github.com/nats-io/nats.go"
 )
 
-func Humidity() {
+func PublishHumidityReading() {
 	nc, err := nats.Connect(nats.DefaultURL)
 	if err != nil {
 		log.Fatal(err)
@@ -18,8 +18,8 @@ func Humidity() {
 	defer nc.Drain()
 
 	for {
-		reading := entities.HumidityReading{
-			StationID:       "humidity-station-1",
+		reading := entities.WeatherHumidity{
+			StationId:       "humidity-station-1",
 			Timestamp:       time.Now().UTC().Format(time.RFC3339),
 			HumidityPercent: 40 + rand.Float64()*20,
 		}

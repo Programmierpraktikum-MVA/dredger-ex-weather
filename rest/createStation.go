@@ -2,10 +2,9 @@
 package rest
 
 import (
-	"build/core/log"
-	"build/core/tracing"
-	"build/entities"
-	"build/usecases"
+	"asyncservice/core/log"
+	"asyncservice/core/tracing"
+	"asyncservice/entities"
 
 	"encoding/json"
 	"encoding/xml"
@@ -74,11 +73,7 @@ func CreateStation(c echo.Context) error {
 	// var content contains the payload from the request body
 
 	// implement your functionality best using a function from a separate file, e.g. usecases/CreateStationDo.go
-	newStation, err := usecases.CreateStation(content)
-	if err != nil {
-		return c.String(http.StatusInternalServerError, err.Error())
-	}
-	return c.JSON(http.StatusCreated, newStation)
+
 	// 201 => Weather station created
-	//return c.String(http.StatusNotImplemented, "Temporary handler stub.")
+	return c.String(http.StatusNotImplemented, "Temporary handler stub.")
 }

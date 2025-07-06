@@ -4,17 +4,19 @@
 package main
 
 import (
-	"build/async/server"
-	"build/core"
-	"build/core/log"
-	"build/core/tracing"
-	"build/db"
-
-	"build/rest"
-	"build/rest/middleware"
-	"build/web"
-	"context"
+	"asyncservice/async/server"
+	"asyncservice/core"
+	"asyncservice/core/log"
+	"asyncservice/core/tracing"
+	"asyncservice/db"
 	"embed"
+	"flag"
+
+	"asyncservice/rest"
+	"asyncservice/rest/middleware"
+
+	"asyncservice/web"
+	"context"
 	_ "embed"
 
 	"github.com/labstack/echo-contrib/echoprometheus"
@@ -27,6 +29,7 @@ import (
 var embeddedFS embed.FS
 
 func main() {
+	flag.Parse()
 	log.Setup(core.AppConfig.Name, core.Service, core.AppConfig.LogFile, core.AppConfig.LokiServer, core.AppConfig.LokiKey, core.AppConfig.LokiLabels, core.AppConfig.LokiBuffersize, core.AppConfig.LokiMaxDelay, core.AppConfig.Debug)
 
 	// init Opentelemetry
@@ -71,7 +74,8 @@ func main() {
 		log.Info().Msg("Enabled Rapidoc documentation")
 		e.FileFS("/doc", "web/doc/rapidoc.html", embeddedFS)
 	}
-	e.FileFS("/weather-api.yaml", "web/doc/weather-api.yaml", embeddedFS)
+
+	e.FileFS("/examples/weather-example/weather-api.yaml.yaml", "web/doc/examples/weather-example/weather-api.yaml.yaml", embeddedFS)
 
 	// serve default stylesheets and javascript files
 	e.StaticFS("/css/", echo.MustSubFS(web.Css, "css"))

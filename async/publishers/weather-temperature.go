@@ -1,16 +1,16 @@
 package publishers
 
 import (
-	"build/entities"
+	"asyncservice/entities"
 	"encoding/json"
-	"log"
+	"log" //noch an core logger anpassen
 	"math/rand"
 	"time"
 
 	"github.com/nats-io/nats.go"
 )
 
-func Temperature() {
+func PublishTemperatureReading() {
 	nc, err := nats.Connect(nats.DefaultURL)
 	if err != nil {
 		log.Fatal(err)
@@ -18,8 +18,8 @@ func Temperature() {
 	defer nc.Drain()
 	time.Sleep(time.Second)
 	for {
-		reading := entities.TemperatureReading{
-			StationID:    "temperature-station-1",
+		reading := entities.WeatherTemperature{
+			StationId:    "temperature-station-1",
 			Timestamp:    time.Now().UTC().Format(time.RFC3339),
 			TemperatureC: 15 + rand.Float64()*10,
 		}
@@ -30,7 +30,7 @@ func Temperature() {
 			continue
 		}
 
-		err = nc.Publish("weather-temperature", data)
+		err = nc.Publish("WeatherTemperature", data)
 		if err != nil {
 			log.Println("Error publishing temperature:", err)
 		} else {

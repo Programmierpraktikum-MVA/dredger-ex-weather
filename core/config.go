@@ -2,7 +2,7 @@
 package core
 
 import (
-	"build/core/log"
+	"asyncservice/core/log"
 	"flag"
 	"os"
 
@@ -16,9 +16,9 @@ type Config struct {
 	Args                []string `ignored:"true"`
 	Debug               bool     `default:"false"`
 	Version             bool     `default:"false" ignored:"true"`
-	Service             string   `default:"build" ignored:"true"`
+	Service             string   `default:"async-service" ignored:"true"`
 	Sid                 string   `ignored:"true"`
-	Name                string   `default:"build"`
+	Name                string   `default:"async-service"`
 	Title               string
 	PortNb              string   `default:"8080"` // Port is a reserved name in k8s
 	ApiKeys             []string `default:"" split_words:"true"`
@@ -73,7 +73,7 @@ func init() {
 	// extend custom flags
 	initFlags()
 
-	//	flag.Parse()
+	//    flag.Parse()
 	AppConfig.Args = flag.Args()
 
 	if AppConfig.Name == "" {
@@ -97,7 +97,7 @@ func init() {
 		log.Fatal().Err(err).Str("name", stringy.New(AppConfig.Name).SnakeCase("?", "").ToUpper()).Msg("Couldn't read environment settings")
 	}
 
-	//	flag.Parse()
+	//    flag.Parse()
 
 	log.Setup(AppConfig.Name, Service, AppConfig.LogFile, AppConfig.LokiServer, AppConfig.LokiKey, AppConfig.LokiLabels, AppConfig.LokiBuffersize, AppConfig.LokiMaxDelay, AppConfig.Debug)
 

@@ -6,7 +6,7 @@ import (
 	"strings"
 )
 
-const Service = "build"
+const Service = "async-service"
 
 type Info struct {
 	Service string
@@ -20,7 +20,7 @@ var (
 	Version string = strings.TrimSpace(version)
 	//go:embed version
 	version string
-	AppInfo Info
+    AppInfo Info
 )
 
 func init() {

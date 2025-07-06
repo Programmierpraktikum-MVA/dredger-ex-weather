@@ -6,18 +6,12 @@ import (
 )
 
 type WeatherUpdate struct {
-	Title       string `json:"title,omitempty" yaml:"title,omitempty" xml:"title,omitempty"`
 	Description string `json:"description,omitempty" yaml:"description,omitempty" xml:"description,omitempty"`
 	Timestamp   string `json:"timestamp,omitempty" yaml:"timestamp,omitempty" xml:"timestamp,omitempty"`
+	Title       string `json:"title,omitempty" yaml:"title,omitempty" xml:"title,omitempty"`
 }
 
 func (v *WeatherUpdate) Validate() error {
-
-	// ToDo: Improve validation of MaxLength
-
-	if len(v.Title) > 9223372036854775807 {
-		return fmt.Errorf("string '%s' is too long", "title")
-	}
 
 	// ToDo: Improve validation of MaxLength
 
@@ -29,6 +23,12 @@ func (v *WeatherUpdate) Validate() error {
 
 	if len(v.Timestamp) > 9223372036854775807 {
 		return fmt.Errorf("string '%s' is too long", "timestamp")
+	}
+
+	// ToDo: Improve validation of MaxLength
+
+	if len(v.Title) > 9223372036854775807 {
+		return fmt.Errorf("string '%s' is too long", "title")
 	}
 
 	return nil

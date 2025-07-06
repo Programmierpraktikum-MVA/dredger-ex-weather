@@ -5,7 +5,7 @@ import (
 	"sync"
 	"time"
 
-	"build/entities"
+	"asyncservice/entities"
 
 	"github.com/google/uuid"
 )

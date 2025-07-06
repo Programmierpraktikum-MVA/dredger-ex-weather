@@ -11,7 +11,7 @@ import (
 	"github.com/nicksnyder/go-i18n/v2/i18n"
 	"golang.org/x/text/language"
 
-	"build/core/log"
+	"asyncservice/core/log"
 )
 
 //go:embed locales/locale.*.toml

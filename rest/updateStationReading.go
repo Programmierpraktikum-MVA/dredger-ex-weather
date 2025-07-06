@@ -2,10 +2,10 @@
 package rest
 
 import (
-	"build/core/log"
-	"build/core/tracing"
-	"build/entities"
-	"build/usecases"
+	"asyncservice/core/log"
+	"asyncservice/core/tracing"
+	"asyncservice/entities"
+	"asyncservice/usecases"
 
 	"encoding/json"
 	"encoding/xml"
@@ -75,16 +75,15 @@ func UpdateStationReading(c echo.Context) error {
 
 	stationId := c.Param("stationId")
 
-	// implement your functionality best using a function from a separate file, e.g. usecases/UpdateStationReadingDo.go
-
-	//stationId := c.Param("stationId")
 	err = usecases.UpdateStationReading(stationId, content)
 	if err != nil {
 		return c.String(http.StatusNotFound, err.Error())
 	}
 	return c.NoContent(http.StatusOK)
 
+	// implement your functionality best using a function from a separate file, e.g. usecases/UpdateStationReadingDo.go
+
 	// 200 => Weather station updated
 	// 404 => Station not found
-	//return c.String(http.StatusNotImplemented, "Temporary handler stub.")
+	return c.String(http.StatusNotImplemented, "Temporary handler stub.")
 }
