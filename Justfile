@@ -50,7 +50,7 @@ docker-build:
 	rm -rf build
 
 docker-run:
-	docker run --rm -p 8080:8080 --env-file=.env build
+	docker run --rm -p 9090:9090 --env-file=.env build
 
 # Install required tools
 required:
