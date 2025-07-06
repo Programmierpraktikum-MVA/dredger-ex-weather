@@ -30,7 +30,7 @@ _Zweck: Integration von sowohl OpenAPI als auch AsyncAPI_
 - `publishers/weather-humidity.go`
 
 ```go
-func publishHumidityReading() {
+func PublishHumidityReading() {
 	nc, err := nats.Connect(nats.DefaultURL)
 	if err != nil {
 		log.Fatal(err)
@@ -50,7 +50,7 @@ func publishHumidityReading() {
 			continue
 		}
 
-		err = nc.Publish("WeatherHumidity", data)
+		err = nc.Publish("weather-humidity", data)
 		if err != nil {
 			log.Println("Error publishing humidity:", err)
 		} else {
@@ -65,7 +65,7 @@ func publishHumidityReading() {
 - `publishers/weather-temperature.go`
 
 ```go
-func publishTemperatureReading(){
+func PublishTemperatureReading(){
 	nc, err := nats.Connect(nats.DefaultURL)
 	if err != nil {
 		log.Fatal(err)
@@ -85,7 +85,7 @@ func publishTemperatureReading(){
 			continue
 		}
 
-		err = nc.Publish("WeatherTemperature", data)
+		err = nc.Publish("weather-temperature", data)
 		if err != nil {
 			log.Println("Error publishing temperature:", err)
 		} else {
@@ -97,7 +97,7 @@ func publishTemperatureReading(){
 }
 ```
 
-- `usecases/usecases.go`
+- `usecases/usecase.go`
 
 ```go
 package usecases
@@ -184,8 +184,8 @@ import (
 - `mainSvc.go` in `mainSvc()`;
 
 ```go
-go publishers.Humidity()
-go publishers.Temperature()
+go publishers.PublishHumidityReading()
+go publishers.PublishTemperatureReading()
 ```
 
 - `rest/listStations.go`;
@@ -194,7 +194,6 @@ go publishers.Temperature()
 stations := usecases.ListStations()
 return c.JSON(http.StatusOK, stations)
 ```
-_return-Funktion aus Kommentar_
 
 - `rest/updateStationReadings.go`;
 
@@ -205,7 +204,6 @@ if err != nil {
 }
 return c.NoContent(http.StatusOK)
 ```
-_return-Funktion aus Kommentar_
 
 - `rest/getStationById.go`;
 
@@ -216,5 +214,4 @@ if err != nil {
 }
 return c.JSON(http.StatusOK, station)
 ```
-_return-Funktion aus Kommentar_
 
