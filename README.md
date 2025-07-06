@@ -38,8 +38,8 @@ func publishHumidityReading() {
 	defer nc.Drain()
 
 	for {
-		reading := entities.HumidityReading{
-			StationID:       "humidity-station-1",
+		reading := entities.WeatherHumidity{
+			StationId:       "humidity-station-1",
 			Timestamp:       time.Now().UTC().Format(time.RFC3339),
 			HumidityPercent: 40 + rand.Float64()*20,
 		}
@@ -50,7 +50,7 @@ func publishHumidityReading() {
 			continue
 		}
 
-		err = nc.Publish("weather-humidity", data)
+		err = nc.Publish("WeatherHumidity", data)
 		if err != nil {
 			log.Println("Error publishing humidity:", err)
 		} else {
@@ -73,8 +73,8 @@ func publishTemperatureReading(){
 	defer nc.Drain()
 	time.Sleep(time.Second)
 	for {
-		reading := entities.TemperatureReading{
-			StationID:    "temperature-station-1",
+		reading := entities.WeatherTemperature{
+			StationId:    "temperature-station-1",
 			Timestamp:    time.Now().UTC().Format(time.RFC3339),
 			TemperatureC: 15 + rand.Float64()*10,
 		}
@@ -85,7 +85,7 @@ func publishTemperatureReading(){
 			continue
 		}
 
-		err = nc.Publish("weather-temperature", data)
+		err = nc.Publish("WeatherTemperature", data)
 		if err != nil {
 			log.Println("Error publishing temperature:", err)
 		} else {
@@ -107,7 +107,7 @@ import (
 	"sync"
 	"time"
 
-	"build/entities"
+	"asyncservice/entities"
 
 	"github.com/google/uuid"
 )
@@ -173,7 +173,13 @@ func UpdateStationReading(id string, update entities.WeatherUpdate) error {
 	return nil
 }
 ```
+- `mainSvc.go` import;
 
+```go
+import (
+	"asyncservice/async/publishers"
+)
+```
 
 - `mainSvc.go` in `mainSvc()`;
 
