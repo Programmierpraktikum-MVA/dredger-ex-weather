@@ -25,7 +25,7 @@ _Zweck: Integration von sowohl OpenAPI als auch AsyncAPI_
 # Kurzanleitung - Beispielprojekt selbst generieren
 
 1. Specfiles einfügen
-2. Dredger laufen lassen mit `go run main.go generate examples/simple/weather-example.json -o ./build-wetter -n async-service -f -D` --Ergänzen--
+2. Dredger laufen lassen mit `go run main.go generate examples/weather-example/asyncapi.yaml examples/weather-example/weather-api.yaml -o ./build-wetter -n async-service -f -D`
 3. Businesslogik einfügen:
 - `publishers/weather-humidity.go`
 
